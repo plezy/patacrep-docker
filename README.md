@@ -32,6 +32,7 @@ git clone https://github.com/plezy/patacrep-docker.git
 ```
 and then run 'make' to build the image.
 ```
+cd patacrep-docker
 make
 ```
 
@@ -45,4 +46,34 @@ docker ...
 
 The *patacrep* songbook database can be found at https://github.com/patacrep/patadata. By default, the container will fetch this repository and compile the songbook. 
 
+To persist data, you need to map a local folder to the /data container's folder.
+In the examples below, data are persisted in the /tmp/patadata folder.
+
 ## default build
+
+After running the following, you will find in the /tmp/patadata/patadata/books folder, the complete songbooks in pdf files : *songbook_fr.pdf* and *songbook_en.pdf*.
+### The easy way
+
+in the patacrep-docker folder run the command :
+```
+make run
+```
+
+### Using docker
+```
+docker run -it --rm -v /tmp/patadata:/data patacrep
+```
+
+## custom builds
+
+To build custom songbooks, you can enter a bash command, using either the make file in the patacrep-docker folder :
+```
+make shell
+```
+
+or docker directly :
+```
+docker run -it --rm -v /tmp/patadata:/data patacrep bash
+```
+
+You will then enter a bash within the container where you can issue your own commands.
